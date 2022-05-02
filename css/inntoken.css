@@ -1,0 +1,20 @@
+@font-face {
+    font-family: IranSans;
+    src: url(../fonts/IrSansMedium/IRANSansFaNum-Medium.eot);
+    src: url(../fonts/IrSansMedium/IRANSansFaNum-Medium.eot?#iefix) format('embedded-opentype'), url(../fonts/IrSansMedium/IRANSansFaNum-Medium.woff2) format('woff2'), url(../fonts/IrSansMedium/IRANSansFaNum-Medium.woff) format('woff'), url(../fonts/IrSansMedium/IRANSansFaNum-Medium.ttf) format('truetype'), url(../fonts/IrSansMedium/IRANSansFaNum-Medium.svg#AIranianSans) format('svg');
+    font-weight: 400;
+    font-style: normal
+}
+
+@font-face {
+    font-family: IranSansLight;
+    src: url(../fonts/IRANSansFaNum-Light.eot);
+    src: url(../fonts/IRANSansFaNum-Light.eot?#iefix) format('embedded-opentype'), url(../fonts/IRANSansFaNum-Light.woff2) format('woff2'), url(../fonts/IRANSansFaNum-Light.woff) format('woff'), url(../fonts/IRANSansFaNum-Light.ttf) format('truetype'), url(../fonts/IRANSansFaNum-Light.svg#AIranianSans) format('svg');
+    font-weight: 400;
+    font-style: normal
+}
+.persian {
+    font-family: IranSansLight,IranSansLight, calibri, sans-serif !important;
+    font-weight: lighter;
+    font-size: medium
+}

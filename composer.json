@@ -1,0 +1,16 @@
+{
+    "name": "roticmedia/roticwp",
+    "description": "Connect your website to the Rotic intelligent services, because you contacted to the future.",
+    "type": "library",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Milad Xandi",
+            "email": "stun.m_zandizand@riau.ac.ir"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+      "ext-json": "*"
+    }
+}
