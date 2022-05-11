@@ -12,4 +12,5 @@ jQuery(function ($) {
 
 function copy(text) {
     navigator.clipboard.writeText(text);
+
 }
