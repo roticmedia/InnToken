@@ -4,7 +4,7 @@
 Plugin Name: توکن نوآوری
 Plugin URI: https://inntoken.ir/
 Description: وب سایت وردپرسی خود را به درگاه رمز ارزی "توکن نوآوری" متصل کنید!
-Version: 0.0.3
+Version: 0.0.4.1
 Author: شرکت دانش بنیان روتیک
 Author URI: http://rotic.ir
 License: GPLv2
