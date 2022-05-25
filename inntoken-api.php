@@ -195,7 +195,7 @@ function inntoken_prefix_register() {
                 exit;
             }
             else{
-                $order = new WC_Order($_COOKIE['order_id']);
+                $order = new WC_Order(inntoken_encrypt_decryot($_COOKIE['order_id'],'d'));
                 if ($request['status']==1){
                     $order->update_status('completed', "پرداخت شده با توکن نواوری (INN)");
                 }else{
