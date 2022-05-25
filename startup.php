@@ -4,7 +4,7 @@
 Plugin Name: توکن نوآوری
 Plugin URI: https://inntoken.ir/
 Description: وب سایت وردپرسی خود را به درگاه رمز ارزی "توکن نوآوری" متصل کنید!
-Version: 0.0.4.3
+Version: 0.0.4.4
 Author: شرکت دانش بنیان روتیک
 Author URI: http://rotic.ir
 License: GPLv2
@@ -39,7 +39,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
 
 function inntoken_menu_builder()
 {
-    add_menu_page('توکن نوآوری (INN)', 'توکن نوآوری (INN)', 'manage_options', 'inntoken', '', "/wp-content/plugins/InnToken/assets/Inn-Wp-Logo.png");
+    add_menu_page('توکن نوآوری (INN)', 'توکن نوآوری (INN)', 'manage_options', 'inntoken', '', get_site_url()."/wp-content/plugins/InnToken/assets/Inn-Wp-Logo.png");
 }
 
 
@@ -54,13 +54,13 @@ add_action('admin_enqueue_scripts', 'inntoken_callback_for_setting_up_scripts');
 
 function inntoken_callback_for_setting_up_scripts()
 {
-    wp_register_style('semantic', '/wp-content/plugins/InnToken/css/semantic.min.css');
-    wp_register_style('icon', '/wp-content/plugins/InnToken/css/icon.min.css');
-    wp_register_style('inntoken', '/wp-content/plugins/InnToken/css/inntoken.css');
-    wp_register_script('jquery', '/wp-content/plugins/InnToken/js/jquery-3.1.1.min.js');
-    wp_register_script('autoNumeric', '/wp-content/plugins/InnToken/js/autoNumeric.js');
-    wp_register_script('semantic', '/wp-content/plugins/InnToken/js/semantic.min.js');
-    wp_register_script('inntoken', '/wp-content/plugins/InnToken/js/inntoken.js');
+    wp_register_style('semantic', get_site_url().'/wp-content/plugins/InnToken/css/semantic.min.css');
+    wp_register_style('icon', get_site_url().'/wp-content/plugins/InnToken/css/icon.min.css');
+    wp_register_style('inntoken', get_site_url().'/wp-content/plugins/InnToken/css/inntoken.css');
+    wp_register_script('jquery', get_site_url().'/wp-content/plugins/InnToken/js/jquery-3.1.1.min.js');
+    wp_register_script('autoNumeric', get_site_url().'/wp-content/plugins/InnToken/js/autoNumeric.js');
+    wp_register_script('semantic', get_site_url().'/wp-content/plugins/InnToken/js/semantic.min.js');
+    wp_register_script('inntoken', get_site_url().'/wp-content/plugins/InnToken/js/inntoken.js');
 
     wp_enqueue_style('semantic');
     wp_enqueue_style('icon');
@@ -171,7 +171,7 @@ function inntoken_page_builder()
                             <td>
                                 <div class="ui input">
                                     <input name="domain" type="url" id="domain"
-                                           value="<?php echo empty($domain) ? '' : $domain ?>"
+                                           value="<?php echo get_site_url() ?>"
                                            class="regular-text persian inn-input">
                                 </div>
                             </td>

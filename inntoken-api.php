@@ -83,7 +83,7 @@ function inntoken_purchase_request($amount,$url = null)
     );
     $body = array(
         'inntokenAmount' => intval(intval($amount) / 30,0),
-        'callBackFunction' => $url==null?get_option('domain'):$url,
+        'callBackFunction' => $url==null?get_option('domain').'/wp-json/inntoken/v1/verify':$url,
     );
     $args = array(
         'body' => json_encode($body),
@@ -159,12 +159,41 @@ function inntoken_verify() {
 }
 
 function inntoken_prefix_register() {
+    if (!session_id()) {
+        session_start();
+    }
     // register_rest_route() handles more arguments but we are going to stick to the basics for now.
     register_rest_route( 'inntoken/v1', '/verify', array(
         // By using this constant we ensure that when the WP_REST_Server changes our readable endpoints will work as intended.
-        'methods'  => WP_REST_Server::READABLE,
+        'methods'  => 'GET',
         // Here we register our callback. The callback is fired when this endpoint is matched by the WP_REST_Server class.
-        'callback' => 'verify',
+        'callback' => function($request){
+            if ($_SESSION['order_id']==null){
+                if ($request['status']==1){
+                    echo "پرداخت با موفقیت انجام شد!";
+                }else{
+                    echo "تراکنش شما با خطا مواجه شد!";
+                }
+                wp_redirect(get_site_url());
+                exit;
+            }else{
+                $order = new WC_Order($_SESSION['order_id']);
+                if ($request['status']==1){
+                    $order->update_status('completed', "پرداخت شده با توکن نواوری (INN)");
+                }else{
+                    $order->update_status('failed', "خطا هنگام پرداخت با توکن نواوری (INN)");
+                    wp_redirect(get_site_url());
+                    $_SESSION['order_id']=null;
+                    $_SESSION['tracking_code']=null;
+                    exit;
+                }
+                wp_redirect( get_site_url()."/index.php/my-account/view-order/".$_SESSION['order_id'] );
+                $_SESSION['order_id']=null;
+                $_SESSION['tracking_code']=null;
+                exit;
+            }
+
+        },
     ) );
 }
 
