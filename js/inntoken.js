@@ -9,8 +9,17 @@ jQuery(function ($) {
         $('.menu .item').tab();
     });
 });
-
 function copy(text) {
     navigator.clipboard.writeText(text);
-
+    jQuery.toast({
+        text: 'مقدار با موفقیت کپی شد!',
+        showHideTransition: 'fade',
+        bgColor: '#44b5a2',
+        textColor: '#FFF',
+        allowToastClose: true,
+        hideAfter: 7000,
+        stack: 5,
+        textAlign: 'center',
+        position: 'bottom-center'
+    });
 }

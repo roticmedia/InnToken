@@ -62,6 +62,7 @@
     background: #B27F2B !important;
     border-radius: 54px !important;
     color:white !important;
+    border: 2px solid #B27F2B !important;
 }
 .inn-submit:focus{
     text-decoration: none;
@@ -69,11 +70,47 @@
 }
 .inn-submit:hover{
     text-decoration: none;
-    border: 2px solid #B27F2B !important;
+    color: #B27F2B !important;
+    background: white !important;
+    transition: background .25s, color .25s, .25s ease-in-out;
+    -moz-transition: background .25s, color .25s, .25s ease-in-out;
+    -webkit-transition: background .25s, color .25s, .25s ease-in-out;
+}
+.inn-submit{
+    transition: all 2s;
+    -moz-transition: all 2s;
+    -webkit-transition: all 2s;
 }
 .inn-submit:active{
     text-decoration: none;
     border: 2px solid #B27F2B !important;
+}
+.inn-danger{
+    background: #FF0000 !important;
+    border-radius: 54px !important;
+    color:white !important;
+    border: 2px solid #FF0000 !important;
+}
+.inn-danger:focus{
+    text-decoration: none;
+    border: 2px solid #FF0000 !important;
+}
+.inn-danger:hover{
+    text-decoration: none;
+    color: #FF0000 !important;
+    background: white !important;
+    transition: background .25s, color .25s, .25s ease-in-out;
+    -moz-transition: background .25s, color .25s, .25s ease-in-out;
+    -webkit-transition: background .25s, color .25s, .25s ease-in-out;
+}
+.inn-danger{
+    transition: all 2s;
+    -moz-transition: all 2s;
+    -webkit-transition: all 2s;
+}
+.inn-danger:active{
+    text-decoration: none;
+    border: 2px solid #FF0000 !important;
 }
 .inn-input{
     height: 39px !important;

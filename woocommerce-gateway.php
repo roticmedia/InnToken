@@ -24,21 +24,34 @@ function init_inntoken_gateway()
 
         public function init_settings()
         {
+            parent::init_settings();
             add_action('woocommerce_update_options_payment_gateways' . $this->id, array($this, 'process_admin_options'));
+//            $this->enabled = ! isset( $this->settings['enabled'] ) || (isset($_POST['woocommerce_inn_enabled'] ) && '1' === $_POST['woocommerce_inn_enabled']) ? 'yes' : 'no';
+//            $this->update_option('enabled',! isset( $this->settings['enabled'] ) || (isset($_POST['woocommerce_inn_enabled'] ) && '1' === $_POST['woocommerce_inn_enabled']) ? 1 : 0);
+        }
+
+        public function init_form_fields()
+        {
+//            $this->form_fields = array(
+//                'enabled' => array(
+//                    'title' => __( 'Enable/Disable', 'woocommerce' ),
+//                    'type' => 'checkbox',
+//                    'label' => 'فعالسازی پرداخت با توکن نوآوری',
+//                    'default'=> ! empty( $this->settings['enabled'] ) && 'yes' === $this->settings['enabled'] ? 'yes' : 'no'
+//                ),
+//            );
         }
 
         public function process_payment($order_id)
         {
             global $woocommerce;
-            if (!session_id()) {
-                session_start();
-            }
+
             $order = new WC_Order($order_id);
             $correlation_id = inntoken_purchase_request($order->get_currency() == "IRR" ? $order->get_total() / 10 : $order->get_total(), get_option('domain').'/wp-json/inntoken/v1/verify');
             $order->update_status('on-hold', "در انتظار پرداخت با توکن نواوری (INN)");
             $woocommerce->cart->empty_cart();
-            $_SESSION['order_id'] = $order_id;
-            $_SESSION['tracking_code'] = $correlation_id;
+            setcookie('order_id',inntoken_encrypt_decryot($order_id),time()+100000);
+            setcookie('tracking_code',inntoken_encrypt_decryot($correlation_id),time()+100000);
             return array(
                 'result' => 'success',
                 'redirect' => 'https://ipg.inntoken.ir/payment/' . $correlation_id
@@ -54,22 +67,6 @@ function init_inntoken_gateway()
         $methods[] = 'InnToken_WC_Payment_Gateway';
         return $methods;
     }
-
-
-    add_action('woocommerce_api_callback', 'inntoken_api_callback');
-    function inntoken_api_callback()
-    {
-        global $woocommerce;
-        $order = new WC_Order($_SESSION['order_id']);
-
-        $order->update_status('completed', "پرداخت شده با توکن نواوری (INN)");
-//        $woocommerce->cart->empty_cart();
-//        header("location: /");
-        echo 22;
-
-    }
-
-
 
 
     if (!function_exists('write_log')) {

@@ -39,7 +39,7 @@ if (is_plugin_active('woocommerce/woocommerce.php')) {
 
 function inntoken_menu_builder()
 {
-    add_menu_page('توکن نوآوری (INN)', 'توکن نوآوری (INN)', 'manage_options', 'inntoken', '', get_site_url()."/wp-content/plugins/InnToken/assets/Inn-Wp-Logo.png");
+    add_menu_page('توکن نوآوری (INN)', 'توکن نوآوری (INN)', 'manage_options', 'inntoken', '', get_site_url() . "/wp-content/plugins/InnToken/assets/Inn-Wp-Logo.png");
 }
 
 
@@ -54,20 +54,24 @@ add_action('admin_enqueue_scripts', 'inntoken_callback_for_setting_up_scripts');
 
 function inntoken_callback_for_setting_up_scripts()
 {
-    wp_register_style('semantic', get_site_url().'/wp-content/plugins/InnToken/css/semantic.min.css');
-    wp_register_style('icon', get_site_url().'/wp-content/plugins/InnToken/css/icon.min.css');
-    wp_register_style('inntoken', get_site_url().'/wp-content/plugins/InnToken/css/inntoken.css');
-    wp_register_script('jquery', get_site_url().'/wp-content/plugins/InnToken/js/jquery-3.1.1.min.js');
-    wp_register_script('autoNumeric', get_site_url().'/wp-content/plugins/InnToken/js/autoNumeric.js');
-    wp_register_script('semantic', get_site_url().'/wp-content/plugins/InnToken/js/semantic.min.js');
-    wp_register_script('inntoken', get_site_url().'/wp-content/plugins/InnToken/js/inntoken.js');
+    wp_register_style('semantic', get_site_url() . '/wp-content/plugins/InnToken/css/semantic.min.css');
+    wp_register_style('icon', get_site_url() . '/wp-content/plugins/InnToken/css/icon.min.css');
+    wp_register_style('inntoken', get_site_url() . '/wp-content/plugins/InnToken/css/inntoken.css');
+    wp_register_style('toast', get_site_url() . '/wp-content/plugins/InnToken/css/jquery.toast.css');
+    wp_register_script('jquery', get_site_url() . '/wp-content/plugins/InnToken/js/jquery-3.1.1.min.js');
+    wp_register_script('autoNumeric', get_site_url() . '/wp-content/plugins/InnToken/js/autoNumeric.js');
+    wp_register_script('semantic', get_site_url() . '/wp-content/plugins/InnToken/js/semantic.min.js');
+    wp_register_script('toast', get_site_url() . '/wp-content/plugins/InnToken/js/jquery.toast.js');
+    wp_register_script('inntoken', get_site_url() . '/wp-content/plugins/InnToken/js/inntoken.js');
 
     wp_enqueue_style('semantic');
     wp_enqueue_style('icon');
+    wp_enqueue_style('toast');
     wp_enqueue_style('inntoken');
     wp_enqueue_script('jquery');
     wp_enqueue_script('autoNumeric');
     wp_enqueue_script('semantic');
+    wp_enqueue_script('toast');
     wp_enqueue_script('inntoken');
 }
 
@@ -94,19 +98,16 @@ function inntoken_page_builder()
                 update_option('access', $json->data->access);
             }
         }
-    }
-    elseif (isset($_POST['generate'])) {
+    } elseif (isset($_POST['generate'])) {
         $amount = intval(esc_sql(str_replace(['تومان', ',', ' ', ',', ' تومان'], '', $_POST['amount'])));
         $correlation_id = inntoken_purchase_request($amount);
         echo '<div id="message" class="updated notice is-dismissible persian" ><p>فاکتور با موفقیت ایجاد گردید.</p><button type="button" class="notice-dismiss"><span class="screen-reader-text">رد کردن این اخطار</span></button></div>';
         $purchase = "https://ipg.inntoken.ir/payment/" . $correlation_id;
-    }
-    elseif (isset($_POST['logout'])) {
-        update_option('access_token',null);
-        update_option('refresh',null);
-        $GLOBALS['reset_login']=true;
-    }
-    else{
+    } elseif (isset($_POST['logout'])) {
+        update_option('access_token', null);
+        update_option('refresh', null);
+        $GLOBALS['reset_login'] = true;
+    } else {
         $purchase = null;
     }
     if ($access != null) {
@@ -118,7 +119,10 @@ function inntoken_page_builder()
     ?>
     <div class="wrap">
         <h1 class="persian">تنظیمات افزونه توکن نوآوری (INN)</h1>
-        <form method="post" class="persian" enctype="multipart/form-data" > <button type="submit" name="logout" class="ui button persian inn-submit" >خروج <i class="power off icon" ></i> </button> </form>
+        <form method="post" class="persian" enctype="multipart/form-data">
+            <button type="submit" name="logout" class="ui button persian inn-danger">خروج <i class="power off icon"></i>
+            </button>
+        </form>
         <p class="description persian" id="home-description">
 
         </p>
@@ -225,7 +229,8 @@ function inntoken_page_builder()
                                 <td class="no-border-bottom" style="border-bottom: 0px solid #B27F2B !important">
                                     <?php echo $key + 1 ?>
                                 </td>
-                                <td class="persian no-border-bottom" style="border-bottom: 0px solid #B27F2B !important">
+                                <td class="persian no-border-bottom"
+                                    style="border-bottom: 0px solid #B27F2B !important">
                                     ... <?php echo substr($transaction->txHash, 0, 10) ?>
                                     <button class="ui gray right labeled icon persian rtl inn-copy"
                                             onclick="copy('<?php echo $transaction->txHash ?>')" type="button">
@@ -239,7 +244,8 @@ function inntoken_page_builder()
 
                                     </button>
                                 </td>
-                                <td class="persian no-border-bottom" style="border-bottom: 0px solid #B27F2B !important">
+                                <td class="persian no-border-bottom"
+                                    style="border-bottom: 0px solid #B27F2B !important">
                                     <?php if ($transaction->transactionStatus == 1): ?>
                                         <button class="ui inn-success-bordered inn-status text-white persian">
                                         <span class="inn-couple-button">
@@ -289,7 +295,8 @@ function inntoken_page_builder()
                                         </button>
                                     <?php endif; ?>
                                 </td>
-                                <td class="persian no-border-bottom" style="border-bottom: 0px solid #B27F2B !important">
+                                <td class="persian no-border-bottom"
+                                    style="border-bottom: 0px solid #B27F2B !important">
                                     <span class="inn-coin">
                                                                     <svg width="24" height="24" viewBox="0 0 24 24"
                                                                          fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -307,14 +314,52 @@ function inntoken_page_builder()
                                 </span>
                                     <?php echo number_format($transaction->value) ?>
                                 </td>
-                                <td class="persian no-border-bottom" style="border-bottom: 0px solid #B27F2B !important">
-                                    <?php echo number_format($transaction->value * 30) ?>
+                                <td class="persian no-border-bottom"
+                                    style="border-bottom: 0px solid #B27F2B !important">
+                                    <?php
+                                    $headers = array(
+                                        'Content-Type' => "application/json",
+                                    );
+                                    $conversion_body = array(
+                                        'amount' => $transaction->value,
+                                    );
+                                    $conversion_args = array(
+                                        'body' => json_encode($conversion_body),
+                                        'timeout' => '5',
+                                        'redirection' => '5',
+                                        'httpversion' => '1.0',
+                                        'blocking' => true,
+                                        'headers' => $headers,
+                                    );
+                                    $response = wp_remote_post($GLOBALS['api_url'] . 'Gateway/ConvertInntokenToToman', $conversion_args)['body'];
+                                    $json = json_decode($response);
+                                    if ($json->isSuccess) {
+                                        echo $json->value;
+
+                                    } else {
+                                        echo 0;
+                                    }
+
+                                    ?>
                                 </td>
-                                <td class="persian no-border-bottom" style="border-bottom: 0px solid #B27F2B !important">
+                                <td class="persian no-border-bottom"
+                                    style="border-bottom: 0px solid #B27F2B !important">
                                     <?php echo $transaction->fromAddress ?>
                                 </td>
-                                <td class="persian rtl no-border-bottom" style="border-bottom: 0px solid #B27F2B !important">
-                                    <?php echo date('H:i:s Y-m-d', $transaction->timeStamp); ?>
+                                <td class="persian rtl no-border-bottom" id="<?php echo $key . 'datetime' ?>"
+                                    style="border-bottom: 0px solid #B27F2B !important;direction: initial">
+                                    <script>
+                                        var today = new Date('<?php echo date('Y/m/d H:i:s', $transaction->timeStamp); ?>').toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'numeric',
+                                            day: 'numeric',
+                                            hour: 'numeric',
+                                            minute: 'numeric',
+                                            second: 'numeric'
+                                        });
+                                        var elem = document.getElementById('<?php echo $key . 'datetime' ?>');
+                                        elem.innerHTML = today.replace('،', ' ');
+                                    </script>
                                 </td>
                             </tr>
                         <?php else: ?>
@@ -405,13 +450,53 @@ function inntoken_page_builder()
                                     <?php echo number_format($transaction->value) ?>
                                 </td>
                                 <td class="persian">
-                                    <?php echo number_format($transaction->value * 30) ?>
+                                    <?php
+                                    if ($transaction->value>0){
+                                        $headers = array(
+                                            'Content-Type' => "application/json",
+                                        );
+                                        $conversion_body = array(
+                                            'amount' => $transaction->value,
+                                        );
+                                        $conversion_args = array(
+                                            'body' => json_encode($conversion_body),
+                                            'timeout' => '5',
+                                            'redirection' => '5',
+                                            'httpversion' => '1.0',
+                                            'blocking' => true,
+                                            'headers' => $headers,
+                                        );
+                                        $response = wp_remote_post($GLOBALS['api_url'] . 'Gateway/ConvertInntokenToToman', $conversion_args);
+                                        $body = wp_remote_retrieve_body($response);
+                                        $json = json_decode($body);
+                                        if ($json->isSuccess) {
+                                            echo $json->value;
+
+                                        } else {
+                                            echo 0;
+                                        }
+                                    }else{
+                                        echo 0;
+                                    }
+
+                                    ?>
                                 </td>
                                 <td>
                                     <?php echo $transaction->fromAddress ?>
                                 </td>
-                                <td class="rtl">
-                                    <?php echo date('H:i:s Y/m/d', $transaction->timeStamp); ?>
+                                <td style="direction: initial" id="<?php echo $key . 'datetime' ?>">
+                                    <script>
+                                        var today = new Date('<?php echo date('Y/m/d H:i:s', $transaction->timeStamp); ?>').toLocaleDateString('fa-IR', {
+                                            year: 'numeric',
+                                            month: 'numeric',
+                                            day: 'numeric',
+                                            hour: 'numeric',
+                                            minute: 'numeric',
+                                            second: 'numeric'
+                                        });
+                                        var elem = document.getElementById('<?php echo $key . 'datetime' ?>');
+                                        elem.innerHTML = today.replace('،', ' ');
+                                    </script>
                                 </td>
                             </tr>
                         <?php endif; ?>
