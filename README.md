@@ -1,4 +1,4 @@
-<p align="center"><img src="https://rotic.ir/images/rotic-full-cyan.png" width="400"></p>
+<p align="center"><img src="https://inntoken.ir/assets/icons/logo-384.png" width="300"></p>
 
 <p align="center">
 <a href="https://github.com/roticmedia/InnToken"><img src="https://badgen.net/github/tag/roticmedia/InnToken" alt="Latest Version"></a>
@@ -6,10 +6,10 @@
 <a href="https://github.com/roticmedia/InnToken"><img src="https://badgen.net/github/license/roticmedia/InnToken" alt="License"></a>
 </p>
 
-# Rotic WP
-Connect your website to the Rotic, because you contacted to the future.
+# InnToken WP
+Connect your website to the InnToken cryptocurrency payment gateway!
 
-<p align="center"><img src="https://rotic.ir/images/background/roticwp206.png" width="100%"></p>
+<p align="center"><img src="https://rotic.ir/images/background/roticwp206.png" style="border-radius: 5px" width="100%">Developed by <a href="https://rotic.ir">Rotic Intelligent Solutions</a></p>
 
 # License
-- GPLv2
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/License_icon-gpl-2.svg/240px-License_icon-gpl-2.svg.png" width="100px" >
